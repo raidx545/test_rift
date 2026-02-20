@@ -1,0 +1,11 @@
+{
+  "name": "rift-js-test",
+  "version": "1.0.0",
+  "description": "A dummy repository to test Rift's JS fixing capabilities",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
