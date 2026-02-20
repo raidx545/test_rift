@@ -1,0 +1,36 @@
+name: Node.js CI
+
+# This workflow triggers when code is pushed to 'main'
+# or when the agent opens a Pull Request!
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x] # Tests against multiple Node versions
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm' # Automatically caches dependencies to speed up runs
+
+    - name: Install Dependencies
+      run: npm ci # 'npm ci' is preferred in CI environments over 'npm install'
+
+    - name: Run Tests
+      # If your package.json doesn't have a specific test script, 
+      # you can change this to `npx vitest run --passWithNoTests` 
+      # or `npx jest --passWithNoTests`
+      run: npm test
